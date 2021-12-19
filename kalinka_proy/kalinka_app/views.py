@@ -20,23 +20,29 @@ def tablero(request):
 
     if request.method == "POST":
         nueva=nuevaTarea(data=request.POST)
-        autor=request.user
-        nueva.update(autor_id=autor)
         
         if nueva.is_valid():
-            print("hola")
-            nueva.save()
+            nueva_completa= nueva.save(commit=False)
+            nueva_completa.autor=request.user
+            nueva_completa.save()
             return redirect(to="Tablero")  
 
     usuario=request.user
     hoy_p=Tarea.objects.filter(autor=usuario, prioridad=1, estado=1)
     hoy_f=Tarea.objects.filter(autor=usuario, prioridad=1, estado=2)
     tranca_p=Tarea.objects.filter(autor=usuario, prioridad=2, estado=1)
+    tranca_f=Tarea.objects.filter(autor=usuario, prioridad=2, estado=2)
+    podria_p=Tarea.objects.filter(autor=usuario, prioridad=3, estado=1)
+    podria_f=Tarea.objects.filter(autor=usuario, prioridad=3, estado=2)
+
     nueva=nuevaTarea()
 
     return render(request, "tablero.html", {"hoy_p":hoy_p,
                                             "hoy_f":hoy_f,
-                                            "tranca_p":tranca_p, 
+                                            "tranca_p":tranca_p,
+                                            "tranca_f":tranca_f,
+                                            "podria_p":podria_p,
+                                            "podria_f":podria_f, 
                                             "nueva":nueva})
 @login_required
 def finalizarTarea(request, id):

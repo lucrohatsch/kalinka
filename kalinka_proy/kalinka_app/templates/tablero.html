@@ -12,7 +12,7 @@
               <h5>Pendiente</h5>
             
               {% for tarea in hoy_p %}
-              <div class="card">
+              <div class="card mb-2" style="background: {{ tarea.color }};">
                 <div class="card-title">
                   <p>{{ tarea.titulo }}</p>
                 </div>
@@ -50,7 +50,7 @@
             <h5>Pendiente</h5>
           
             {% for tarea in tranca_p %}
-            <div class="card">
+            <div class="card mb-2" style="background: {{ tarea.color }};">
               <div class="card-title">
                 <p>{{ tarea.titulo }}</p>
               </div>
@@ -87,7 +87,7 @@
           <h5>Pendiente</h5>
         
           {% for tarea in podria_p %}
-          <div class="card">
+          <div class="card mb-2" style="background: {{ tarea.color }};">
             <div class="card-title">
               <p>{{ tarea.titulo }}</p>
             </div>
@@ -118,7 +118,7 @@
     </div>
     
     <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary float-end" data-toggle="modal" data-target="#exampleModal">
+<button type="button" class="btn btn-primary btn-lg float-end" data-toggle="modal" data-target="#exampleModal" style="position: fixed; bottom: 40px; right: 40px;">
     +
   </button>
   

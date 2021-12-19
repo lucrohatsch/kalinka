@@ -1,7 +1,20 @@
 {% extends "base.html" %}
 
+{% load static %}
 {% block contenido %}
 
-<h1>Home - piripipi</h1>
+<div class="container">
+    <div class="encabezado">
+        <div class="imagen">
+        <img src="{% static '/img/to-do-list.png' %}">
+        </div>
+        <h1>Kalinka</h1>
+    </div>
+    <div class="texto">
+        <p>Kalinka nace como un proyecto de prática realizado con el simple propósito de tener una pequeña aplicación funcional. No pretende ser un producto comercial ni mucho menos.</p>
+        <p>Consiste en tablero para la gestión de tareas personales.</p>
+        <p>Este proyecto está desarrollado con el framework Django </p>
+    </div>
+</div>
 
 {% endblock %}

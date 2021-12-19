@@ -21,7 +21,7 @@
               </button>
               <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                  <a class="nav-link active" aria-current="page" href="#">Home</a>
+                  <a class="nav-link active" aria-current="page" href="{% url 'Home' %}">Home</a>
                   {% if user.is_authenticated %} 
                   <a class="nav-link" href="{% url 'Tablero' %}">Tablero</a>
                   <a class="nav-link" href="#">@{{ user.username }}</a>

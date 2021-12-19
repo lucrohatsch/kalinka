@@ -1,0 +1,47 @@
+body{
+    background-color: white;
+    margin: 0;
+    padding: 0px;
+    font-size:x-large;
+}
+
+.container{
+    display: grid;
+    height: 100vh;
+    
+    justify-content: center;
+    align-content: center;
+}
+
+form{
+    
+}
+
+form > input{
+    font-size: x-large;
+    border: none;
+    margin: 10px 5px;
+    height: 40px;
+    width: 90%;
+    background-color: rgb(235, 232, 232);
+}
+
+form > label{
+    display: block;
+    font-size: medium;
+    color: rgb(199, 195, 195);
+}
+
+span{
+    display: none;
+}
+
+.boton{
+
+    min-width: 30%;
+    font-size:medium;
+}
+
+.boton:hover{
+    cursor: pointer;
+}
