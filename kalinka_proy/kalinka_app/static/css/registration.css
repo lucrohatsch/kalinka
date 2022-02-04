@@ -45,3 +45,7 @@ span{
 .boton:hover{
     cursor: pointer;
 }
+
+.landing-bg{
+    background: #1abc9c;
+}

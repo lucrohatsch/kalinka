@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 
+{% load static %}
 {% block contenido %}
 <div class="container-fluid">
     <div class="row">
@@ -12,16 +13,24 @@
               <h5>Pendiente</h5>
             
               {% for tarea in hoy_p %}
-              <div class="card mb-2" style="background: {{ tarea.color }};">
-                <div class="card-title">
-                  <p>{{ tarea.titulo }}</p>
+              <div class="card mb-2" style="background: {{ tarea.color }}">
+
+                <div class="card-header">
+                  <div class="card-title" style="display: flex; justify-content: space-between;">
+                    <a>{{ tarea.titulo }}</a>
+                    <a>{{ tarea.f_deseada }}</a>
+                  </div>
+                  
                 </div>
-                <div class="card-text">
+                <div class="card-body">
                   <p>{{ tarea.descripcion }}</p>
                 </div>
-                <div class="card-footer">
-                  <a href="{% url 'finalizarTarea' tarea.id %}" class="btn-sm btn-success">Listo</a>
-                  <a href="{% url 'borrarTarea' tarea.id %}" class="btn-sm">borrar</a>
+                <div class="card-footer" style="display: inline;">
+                  <div class="botones">
+                    <a href="{% url 'finalizarTarea' tarea.id %}" class="btn-sm btn-success" type="button">Listo</a>
+                    <a href="../api/tarea/?id={{ tarea.id }}" class="btn-sm btn-primary" type="button" data-toggle="modal" data-target="#editaTarea">Editar</a>
+                    <a href="{% url 'borrarTarea' tarea.id %}" class="btn-sm btn-warning" type="button">borrar</a>
+                  </div>
                 </div>
               </div>       
               {% endfor %} 
@@ -50,18 +59,26 @@
             <h5>Pendiente</h5>
           
             {% for tarea in tranca_p %}
-            <div class="card mb-2" style="background: {{ tarea.color }};">
-              <div class="card-title">
-                <p>{{ tarea.titulo }}</p>
+            <div class="card mb-2" style="background: {{ tarea.color }}">
+
+              <div class="card-header">
+                <div class="card-title" style="display: flex; justify-content: space-between;">
+                  <a>{{ tarea.titulo }}</a>
+                  <a>{{ tarea.f_deseada }}</a>
+                </div>
+                
               </div>
-              <div class="card-text">
+              <div class="card-body">
                 <p>{{ tarea.descripcion }}</p>
               </div>
-              <div class="card-footer">
-                <a href="{% url 'finalizarTarea' tarea.id %}" class="btn-sm btn-success">Listo</a>
-                <a href="{% url 'borrarTarea' tarea.id %}" class="btn-sm">borrar</a>
+              <div class="card-footer" style="display: inline;">
+                <div class="botones">
+                  <a href="{% url 'finalizarTarea' tarea.id %}" class="btn-sm btn-success" type="button">Listo</a>
+                  <a href="../api/tarea/?id={{ tarea.id }}" class="btn-sm btn-primary" type="button" data-toggle="modal" data-target="#editaTarea">Editar</a>
+                  <a href="{% url 'borrarTarea' tarea.id %}" class="btn-sm btn-warning" type="button">borrar</a>
+                </div>
               </div>
-            </div>       
+            </div>         
             {% endfor %} 
 
           </div>
@@ -87,16 +104,24 @@
           <h5>Pendiente</h5>
         
           {% for tarea in podria_p %}
-          <div class="card mb-2" style="background: {{ tarea.color }};">
-            <div class="card-title">
-              <p>{{ tarea.titulo }}</p>
+          <div class="card mb-2" style="background: {{ tarea.color }}">
+
+            <div class="card-header">
+              <div class="card-title" style="display: flex; justify-content: space-between;">
+                <a>{{ tarea.titulo }}</a>
+                <a>{{ tarea.f_deseada }}</a>
+              </div>
+              
             </div>
-            <div class="card-text">
+            <div class="card-body">
               <p>{{ tarea.descripcion }}</p>
             </div>
-            <div class="card-footer">
-              <a href="{% url 'finalizarTarea' tarea.id %}" class="btn-sm btn-success">Listo</a>
-              <a href="{% url 'borrarTarea' tarea.id %}" class="btn-sm">borrar</a>
+            <div class="card-footer" style="display: inline;">
+              <div class="botones">
+                <a href="{% url 'finalizarTarea' tarea.id %}" class="btn-sm btn-success" type="button">Listo</a>
+                <a href="../api/tarea/?id={{ tarea.id }}" class="btn-sm btn-primary" type="button" data-toggle="modal" data-target="#editaTarea">Editar</a>
+                <a href="{% url 'borrarTarea' tarea.id %}" class="btn-sm btn-warning" type="button">borrar</a>
+              </div>
             </div>
           </div>       
           {% endfor %} 
@@ -117,19 +142,19 @@
       </div>
     </div>
     
-    <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary btn-lg float-end" data-toggle="modal" data-target="#exampleModal" style="position: fixed; bottom: 40px; right: 40px;">
+    <!-- Button modal nueva tarea -->
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#formTarea" style="position: fixed; bottom: 40px; right: 40px;">
     +
-  </button>
+</button>
   
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <!-- Modal nueva tarea-->
+  <div class="modal fade" id="formTarea" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Nueva tarea</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+          <h5 class="modal-title" id="ModalLabel">Nueva tarea</h5>
+          <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+            
           </button>
         </div>
         <div class="modal-body">
@@ -139,17 +164,43 @@
                 {{ nueva }}
               
             </div>
+        
+            <div class="modal-footer">
+              <button type="reset" class="btn btn-secondary">Limpiar</button>
+              <button type="submit" class="btn btn-primary">Crear</button>
+            </div>
+          </form>
         </div>
-        <div class="modal-footer">
-          <button type="reset" class="btn btn-secondary">Limpiar</button>
-          <button type="submit" class="btn btn-primary">Crear</button>
-        </div>
-      </form>
       </div>
     </div>
   </div>
   
+<!--Modal editarTarea-->
+<div class="modal fade" id="editaTarea" tabindex="-1" role="dialog" aria-labelledby="tituloEditar" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="tituloEditar" >Editar tarea</h5>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="" method="post" id="editarForm">
+          <div class="card">
+              {% csrf_token %}
+              {{ nueva }}
+            
+          </div>
+          <div class="modal-footer">
+            <button type="reset" class="btn btn-secondary">Limpiar</button>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+          </div>
+        </form>
 
-    
+      </div>
+    </div>
+  </div>
 </div>
+    
+
+<script src="{% static '/js/editarTarea.js' %}"
 {% endblock %}

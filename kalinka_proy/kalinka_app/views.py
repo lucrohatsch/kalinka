@@ -1,15 +1,15 @@
 from django.contrib import auth
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
-from .models import Tarea, Prioridad, Estado
+from .models import Tarea
 from .forms import nuevaTarea, customUserCreationForm
 from datetime import datetime
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
+import json
+from .serializers import TareaSerializer
+from rest_framework import viewsets
 
-
-
-# Create your views here.
 
 
 def home(request):
@@ -25,7 +25,7 @@ def tablero(request):
             nueva_completa= nueva.save(commit=False)
             nueva_completa.autor=request.user
             nueva_completa.save()
-            return redirect(to="Tablero")  
+        return redirect(to="Tablero")
 
     usuario=request.user
     hoy_p=Tarea.objects.filter(autor=usuario, prioridad=1, estado=1)
@@ -53,6 +53,28 @@ def finalizarTarea(request, id):
 def borrarTarea(request,id):
     Tarea.objects.filter(id=id).delete()
     return redirect(to="Tablero")
+
+class TareaViewst(viewsets.ModelViewSet):
+    queryset = Tarea.objects.all()
+    serializer_class= TareaSerializer
+
+    def get_queryset(self):
+        tareas = Tarea.objects.all()
+        tarea_id=self.request.GET.get('id')
+        if tarea_id:
+            tareas=tareas.filter(id=tarea_id)
+        
+        return tareas
+
+@login_required
+def editarTarea(request, id):
+    if request.method == "POST":
+        tarea =  Tarea.objects.filter(id=id).first()
+        data = request.POST
+        tarea_serializer = TareaSerializer(tarea, data = data)
+        if tarea_serializer.is_valid():
+            tarea_serializer.save()
+        return redirect(to="Tablero")
 
 
 def registro(request):

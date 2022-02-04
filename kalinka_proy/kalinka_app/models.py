@@ -41,6 +41,13 @@ class Tarea(models.Model):
         verbose_name="tarea"
         verbose_name_plural="tareas"
     
-    def __str__(self):
-        return self.titulo
     
+    def __str__(self):
+        tarea_json={
+            "titulo":self.titulo, 
+            "descripcion":self.descripcion, 
+            "prioridad":self.prioridad,
+            "color":self.color,
+            "f_deseada":self.f_deseada}
+        
+        return str(tarea_json)

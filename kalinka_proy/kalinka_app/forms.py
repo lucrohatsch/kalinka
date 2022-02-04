@@ -5,8 +5,9 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
 class nuevaTarea(forms.ModelForm):
-    color = forms.CharField(widget=forms.TextInput(attrs={'type': 'color'}))
+    color = forms.CharField(widget=forms.TextInput(attrs={'type': 'color', 'value': '#ffffff'}))
     f_deseada = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}))
+    #autor = forms.CharField(widget=forms.TextInput(attrs={'type': 'hidden'}))
 
     class Meta:
         model = Tarea

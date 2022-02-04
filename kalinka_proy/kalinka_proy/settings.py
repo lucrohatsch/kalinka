@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'kalinka_app',
     'colorfield',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
