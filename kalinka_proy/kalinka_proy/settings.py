@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-ynihg1(d&5jl#tawok^xjl^*tjheo^4v5jk6%gidxzxaek^$ce
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
@@ -77,10 +77,22 @@ WSGI_APPLICATION = 'kalinka_proy.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
+"""
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'kalinka',
+        'USER': 'kalinka',
+        'PASSWORD': 'kalinka',
+        'HOST': 'pgdb',
+        'PORT': 5432,
     }
 }
 
