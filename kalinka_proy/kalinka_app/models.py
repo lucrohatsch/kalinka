@@ -2,18 +2,26 @@ from colorfield.fields import ColorField
 from django.db import models
 from django.db.models.deletion import CASCADE, SET_NULL
 from django.contrib.auth.models import User
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 # Create your models here.
 
 class Prioridad(models.Model):
     nombre=models.CharField(max_length=10)
+    valor=models.IntegerField(default=1, validators=[MaxValueValidator(10), MinValueValidator(1)])
+    creador=models.ForeignKey(User, on_delete=CASCADE, default=1)
 
     class Meta:
         verbose_name="prioridad"
         verbose_name_plural="prioridades"
+        ordering = ['valor']
     
     def __str__(self):
+        prioridad_json = {"id":self.id,
+                          "nombre":self.nombre,
+                          "creador":self.creador,
+                          "valor":self.valor}
         return self.nombre
 
 class Estado(models.Model):
@@ -24,6 +32,7 @@ class Estado(models.Model):
         verbose_name_plural="estados"
     
     def __str__(self):
+
         return self.nombre
 
 class Tarea(models.Model):

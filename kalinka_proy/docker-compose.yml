@@ -9,8 +9,11 @@ services:
             - POSTGRES_PASSWORD=kalinka
         volumes:
             - pgdata:/var/lib/postgresql/data
+        ports:
+            - "5432:5432"
     kalinka:
         build: .
+        env_file: kalinka_proy/.env
         container_name: kalinka_app
         command: python manage.py runserver 0.0.0.0:8000
         volumes:

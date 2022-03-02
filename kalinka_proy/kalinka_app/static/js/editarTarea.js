@@ -1,11 +1,15 @@
 
-function cargarForm(){
-    botones = document.querySelectorAll("a[data-toggle='modal']");
+function botones(){
+    botones_editar = document.querySelectorAll("a[data-target='#editaTarea']");
+    botones_eliminar = document.querySelectorAll("a[data-target='#eliminarTarea']");
 
-    botones.forEach(boton => {
+    botones_editar.forEach(boton => {
         boton.addEventListener('click', leertarea, true);
     });
 
+    botones_eliminar.forEach(boton => {
+        boton.addEventListener('click', eliminartarea, true);
+    });
 
     function leertarea(){
         var url = this.getAttribute('href')
@@ -26,7 +30,20 @@ function cargarForm(){
             
 }
 
+    function eliminartarea(){
+        var url = this.getAttribute('href')
+        var myRequest=new Request(url)
+        fetch(myRequest)
+            .then(response => {
+                return response.json()
+            })
+            .then(data => {
+                document.querySelector("#eliminarForm span[name='tarea']").innerHTML = data[0]['titulo'];
+                document.querySelector("#eliminarForm").action = "borrarTarea/"+data[0]['id']
 
+            })
+            
+}
         
 
 
@@ -37,4 +54,4 @@ function cargarForm(){
 
 
 
-window.onload = cargarForm;
+window.onload = botones;

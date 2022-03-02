@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+
+{% block contenido %}
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Valor</th>
+      <th scope="col">Prioridad</th>
+      <th scope="col">Tareas</th>
+      <th scope="col"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#formPrioridad"><i class="bi bi-plus-square"></i></button></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for p in prioridades %} 
+    <tr>
+      <th scope="row">{{ p.valor }}</th>
+      <td>{{ p.nombre }}</td>
+      <td>{{ p.cantidades }}</td>
+      <td>
+        <a href="../api/prioridad/?id={{ p.id }}" class="btn btn-danger" type="button" data-toggle="modal" data-target="#formEliminarPrioridad"><i class="bi bi-trash"></i></a>
+        <a href="../api/prioridad/?id={{ p.id }}" class="btn btn-primary" type="button" data-toggle="modal" data-target="#formEditarPrioridad"><i class="bi bi-pencil-square"></i></a>
+      </td>
+    </tr>
+    {% endfor %} 
+
+  </tbody>
+</table>
+
+  <!-- Modal nueva prioridad-->
+  <div class="modal fade" id="formPrioridad" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="ModalLabel">Nueva prioridad</h5>
+          <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+            
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="" method="post">
+            <div class="card">
+                {% csrf_token %}
+                {{ nueva }}
+              
+            </div>
+        
+            <div class="modal-footer">
+              <button type="reset" class="btn btn-secondary">Limpiar</button>
+              <button type="submit" class="btn btn-primary">Crear</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+    <!-- Modal editar prioridad-->
+    <div class="modal fade" id="formEditarPrioridad" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="ModalLabel">Editar prioridad</h5>
+            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+              
+            </button>
+          </div>
+          <div class="modal-body">
+            <form action="" method="post" id="editarForm">
+              <div class="card">
+                  {% csrf_token %}
+                  {{ nueva }}
+                
+              </div>
+          
+              <div class="modal-footer">
+                
+                <button type="submit" class="btn btn-primary">Guardar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+        <!-- Modal eliminar prioridad-->
+        <div class="modal fade" id="formEliminarPrioridad" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="ModalLabel">Eliminar prioridad</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                  
+                </button>
+              </div>
+              <div class="modal-body">
+                <form action="" method="post" id="eliminarForm">
+                  <div class="card">
+                      {% csrf_token %}
+                    <p>Está seguro que desea eliminar la prioridad <strong><span name="prioridad"></span></strong></p>
+                  </div>
+              
+                  <div class="modal-footer">
+                    <a href="{% url 'config' %}" class="btn btn-primary" type="button">Cancelar</a>
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+    <script src="{% static '/js/editarPrioridad.js' %}"></script>
+{% endblock %}
