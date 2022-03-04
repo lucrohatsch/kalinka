@@ -3,16 +3,16 @@
 {% load static %}
 {% block contenido %}
 <div class="container-fluid">
-    <div class="row">
+    <div class="row ">
 
       
       {% for col in data %}
       <div class="col-sm p-3">
         <div class="row">  
-          <h4 class="display-6">{{ col.prioridad }}</h4>
+          <h4 class="display-6 text-center">{{ col.prioridad }}</h4>
         </div>
-        <div class="row">  
-          <h5>Pendiente</h5>
+        <div class="row ">  
+          
         
           {% for tarea in col.pendientes %}
           <div class="card mb-2 shadow-sm" style="background: {{ tarea.color }}">
@@ -21,14 +21,18 @@
             <div class="card-body p-1">
               <div class="card-title d-flex justify-content-between">
                 <strong>{{ tarea.titulo }}</strong>
-                <div>
+                {% if hoy > tarea.f_deseada %}
+                <div class=" text-light bg-dark fw-light">  
+                {% else %}
+                <div class=""> 
+                {% endif %}
                   <i class="bi bi-calendar2-week"></i>
-                  {{ tarea.f_deseada }}
+                  {{ tarea.f_deseada }} 
               </div>
               </div>
-              <p class="card-text">{{ tarea.descripcion }}</p>
+              <p class="card-text fw-light">{{ tarea.descripcion }}</p>
             
-              <div class="">
+              <div class="text-end">
                 <a href="{% url 'finalizarTarea' tarea.id %}" class="btn-sm btn-success" type="button"><i class="bi bi-check2-square"></i></a>
                 <a href="../api/tarea/?id={{ tarea.id }}" class="btn-sm btn-primary" type="button" data-toggle="modal" data-target="#editaTarea"><i class="bi bi-pencil-square"></i></a>
                 <a href="../api/tarea/?id={{ tarea.id }}" class="btn-sm btn-warning" type="button" data-toggle="modal" data-target="#eliminarTarea"><i class="bi bi-trash"></i></a>
@@ -38,13 +42,13 @@
           {% endfor %} 
         </div>
 
-        <div class="row"> 
-          <h5>Finalizada</h5>
+        <div class="row align-items-end"> 
+          
         
           {% for tarea in col.resueltas %}
           <div class="card">
             <div class="card-title">
-              <p><del>{{ tarea.titulo }}</del></p>
+              <p class="text-muted fw-light"><del>{{ tarea.titulo }}</del></p>
             </div>
             
           </div>
@@ -75,9 +79,9 @@
         </div>
         <div class="modal-body">
           <form action="" method="post">
-            <div class="card">
+            <div class="">
                 {% csrf_token %}
-                {{ nueva }}
+                {{ nueva.as_p }}
               
             </div>
         
@@ -101,9 +105,9 @@
       </div>
       <div class="modal-body">
         <form action="" method="post" id="editarForm">
-          <div class="card">
+          <div class="">
               {% csrf_token %}
-              {{ nueva }}
+              {{ nueva.as_p }}
             
           </div>
           <div class="modal-footer">
@@ -127,7 +131,7 @@
       </div>
       <div class="modal-body">
         <form action="" method="post" id="eliminarForm">
-          <div class="card">
+          <div class="">
               {% csrf_token %}
               <p>Está seguro que desea eliminar la tarea <strong><span name="tarea"></span></strong></p>
             
@@ -144,5 +148,6 @@
 </div>
     
 
-<script src="{% static '/js/editarTarea.js' %}"
+<script src="{% static '/js/editarTarea.js' %}"></script>
+
 {% endblock %}

@@ -3,19 +3,26 @@
 {% load static %}
 {% block contenido %}
 
-<div class="container">
-    <div class="shadow p-3 mb-5 rounded" style="background: hsla(295, 71%, 71%, 0.884); text-align: center;">
-        <img class="mb-5" src="{% static '/img/to-do-list.png' %}" width="20%">
-        <h1 class="display-2">Kalinka</h1>
+<div class="container-fluid">
+
+    <div class="row align-items-center shadow rounded-3 d-flex" style="background: hsla(295, 94%, 73%, 0.729); text-align: center;">
+        <div class="col text-start fw-light">
+            <h1 class="display-2 text-center">Kalinka</h1>
+            <p>Kalinka nace como un proyecto de prática realizado con el simple propósito de tener una pequeña aplicación funcional. No pretende ser un producto comercial ni mucho menos.</p>
+            <p>Consiste en tablero para la gestión de tareas personales. Todas las funcionalidades fueron definidas por por una persona agena al proyecto, quien me aguantó varias horas hablando de códigos.</p>
+            <p>Este proyecto está desarrollado con el framework Django y utilizando un ambiente dockerizado con una base de datos postgesql</p>
+        </div>
+
+        <div class="col"> 
+            <img src="{% static '/img/kalinka_landing.png' %}">
+            
+        </div>
     </div>
-    <div class="text-justify">
-        <p>Kalinka nace como un proyecto de prática realizado con el simple propósito de tener una pequeña aplicación funcional. No pretende ser un producto comercial ni mucho menos.</p>
-        <p>Consiste en tablero para la gestión de tareas personales. Todas las funcionalidades fueron definidas por por una persona agena al proyecto, quien me aguantó varias horas hablando de códigos.</p>
-        <p>Este proyecto está desarrollado con el framework Django y utilizando un ambiente dockerizado con una base de datos postgesql</p>
-    </div>
+
     <div class="blockquote-footer fixed-bottom text-center">
         <p><small>Kalinka es un producto original de <a href="https://github.com/lucrohatsch">lucrohatsch</a> </small></p>
     </div>
+    
 </div>
 
 {% endblock %}

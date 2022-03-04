@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 from .models import Tarea, Prioridad
 from .forms import nuevaTarea, customUserCreationForm, nuevaPrioridad
-from datetime import datetime
+from datetime import datetime, date
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 import json
@@ -47,8 +47,8 @@ def tablero(request):
                     "resueltas":resueltas})
     
     nueva=nuevaTarea()
-    
-    return render(request, "tablero.html", {"data":data, "nueva":nueva})
+    hoy=date.today()
+    return render(request, "tablero.html", {"data":data, "nueva":nueva, "hoy":hoy})
 
 @login_required
 def finalizarTarea(request, id):
