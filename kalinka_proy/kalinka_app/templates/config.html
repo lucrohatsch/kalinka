@@ -1,33 +1,105 @@
 {% extends "base.html" %}
 
 {% load static %}
-
-
 {% block contenido %}
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">Valor</th>
-      <th scope="col">Prioridad</th>
-      <th scope="col">Tareas</th>
-      <th scope="col"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#formPrioridad"><i class="bi bi-plus-square"></i></button></th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for p in prioridades %} 
-    <tr>
-      <th scope="row">{{ p.valor }}</th>
-      <td>{{ p.nombre }}</td>
-      <td>{{ p.cantidades }}</td>
-      <td>
-        <a href="../api/prioridad/?id={{ p.id }}" class="btn btn-danger" type="button" data-toggle="modal" data-target="#formEliminarPrioridad"><i class="bi bi-trash"></i></a>
-        <a href="../api/prioridad/?id={{ p.id }}" class="btn btn-primary" type="button" data-toggle="modal" data-target="#formEditarPrioridad"><i class="bi bi-pencil-square"></i></a>
-      </td>
-    </tr>
-    {% endfor %} 
+<br>
+ <div class="shadow-sm" style="max-width: 70%; margin: auto;">
+  <!--Inicio acordeon-->
+  <div class="accordion" id="accordionExample">
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingOne">
+        <button class="accordion-button bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          Usuario
+        </button>
+      </h2>
+      <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+          <table class="table">
+            <tbody>
+              <tr>
+                <td scope="row">Usuario</td>
+                <td>{{ info_usuario.username }}</td>
+                <td><a type="button" class="btn btn-sm btn-primary disabled">Cambiar nombre</a></td>
+              </tr>
+              <tr>
+                <td scope="row">Email</td>
+                <td>{{ info_usuario.email }}</td>
+                <td><a type="button" href="" class="btn btn-sm btn-primary disabled">Cambiar email</a></td>
+              </tr>
+              <tr>
+                <td scope="row">Acceso</td>
+                <td>{{ info_usuario.last_login }}</td>
+                <td><a type="button" href="{% url 'password_change' %}" class="btn btn-sm btn-primary" >Cambiar contraseña</a></td>
+              </tr>
+            </tbody>
+          </table>
+          
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingTwo">
+        <button class="accordion-button bg-light collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Prioridades
+        </button>
+      </h2>
+      <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+        <div class="accordion-body">
 
-  </tbody>
-</table>
+          <!-- Tabla de prioridades ordenadas por valor-->
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Valor</th>
+                <th scope="col">Prioridad</th>
+                <th scope="col">Tareas</th>
+                <th scope="col"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#formPrioridad"><i class="bi bi-plus-square"></i></button></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for p in prioridades %} 
+              <tr>
+                <th scope="row">{{ p.valor }}</th>
+                <td>{{ p.nombre }}</td>
+                <td>{{ p.cantidades }}</td>
+                <td>
+                  <a href="../api/prioridad/?id={{ p.id }}" class="btn btn-danger" type="button" data-toggle="modal" data-target="#formEliminarPrioridad"><i class="bi bi-trash"></i></a>
+                  <a href="../api/prioridad/?id={{ p.id }}" class="btn btn-primary" type="button" data-toggle="modal" data-target="#formEditarPrioridad"><i class="bi bi-pencil-square"></i></a>
+                </td>
+              </tr>
+              {% endfor %} 
+            </tbody>
+          </table>  
+
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingThree">
+        <button class="accordion-button bg-light collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          Notificaciones
+        </button>
+      </h2>
+      <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+          <p class="text-muted">En desarrollo</p>  
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+    
+
+
+</div>
+<!--Fin contenedor-->
 
   <!-- Modal nueva prioridad-->
   <div class="modal fade" id="formPrioridad" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
@@ -113,5 +185,10 @@
             </div>
           </div>
         </div>
-    <script src="{% static '/js/editarPrioridad.js' %}"></script>
+
+
+
+
+  <script src="{% static '/js/editarPrioridad.js' %}"></script>
+
 {% endblock %}

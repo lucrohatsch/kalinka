@@ -25,7 +25,8 @@ def home(request):
 def tablero(request):
     """Tablero de tareas. Disponible solo a usuarios registrados.
     En metodo GET muestra el tablero
-    En metodo POST crea nuevas tareas"""
+    En metodo POST crea nuevas tareas
+    """
 
     if request.method == "POST":
         nueva=nuevaTarea(data=request.POST)
@@ -52,16 +53,31 @@ def tablero(request):
 
 @login_required
 def finalizarTarea(request, id):
+    """
+    Finalización de tareas y retorna a tablero
+    Con ID de tarea se cierra a fecha actual.
+    """
     Tarea.objects.filter(id=id).update(f_cierre=datetime.now(), estado_id = 2)
     return redirect(to="Tablero")
 
 @login_required
 def borrarTarea(request,id):
+    """
+    Eliminación de tareas y redirección a Tablero
+    Utiliza metodo POST con id de tarea.
+    En html hay un Modal de confirmación.
+    """
     if request.method=="POST":
         Tarea.objects.filter(id=id).delete()
     return redirect(to="Tablero")
 
 class TareaViewst(viewsets.ModelViewSet):
+    """
+    Corresponde a la API.
+    Por metodo GET se consulta con ID de tarea y devuelve un JSON con toda la información.
+    Se consume con JS para rellenar formularios
+    Utilizada para eliminar y modificar tareas.
+    """
     queryset = Tarea.objects.all()
     serializer_class= TareaSerializer
 
@@ -75,6 +91,10 @@ class TareaViewst(viewsets.ModelViewSet):
 
 @login_required
 def editarTarea(request, id):
+    """
+    Edita tareas por metodo POST con el ID
+    Desde JS se completa el formulario del model con la API.
+    """
     if request.method == "POST":
         tarea =  Tarea.objects.filter(id=id).first()
         data = request.POST
@@ -83,22 +103,13 @@ def editarTarea(request, id):
             tarea_serializer.save()
         return redirect(to="Tablero")
 
-
-def registro(request):
-    form=customUserCreationForm()
-
-    if request.method=="POST":
-        form=customUserCreationForm(data=request.POST)
-        if form.is_valid():
-            form.save()
-            usuario=authenticate(username=form.cleaned_data["username"], password=form.cleaned_data["password1"])
-            login(request,usuario)
-            return redirect(to="Home")
-    return render(request, "registration/registro.html", {"form":form})
-
 @login_required
 def configuracion(request):
-
+    """
+    Configuraciones de usuario
+    En metodo GET muestra tabla de prioridades ordenadas por valor y envia formulario vacio,
+    En metodo POST crea nuevas prioridades
+    """
     if request.method=='POST':
         nueva=nuevaPrioridad(data=request.POST)
         if nueva.is_valid():
@@ -109,15 +120,26 @@ def configuracion(request):
         return redirect(to='config')
             
     usuario = request.user
-    prioridades = Prioridad.objects.annotate(cantidades=Count('tarea', filter=Q(creador=usuario))).order_by('valor')
+    """
+    En SQL seria algo como...
+    select prioridad, count(tareas) from prioridades where autor=usuario
+    
+    """
+    prioridades = Prioridad.objects.filter(creador=usuario).annotate(cantidades=Count('tarea', filter=Q(creador=usuario))).order_by('valor')
     nueva=nuevaPrioridad()
+    info_usuario = User.objects.get(username=usuario)
 
-    return render(request, 'config.html', {"prioridades":prioridades, "nueva":nueva})
+
+    return render(request, 'config.html', {"prioridades":prioridades, "nueva":nueva, 'info_usuario':info_usuario})
 
 
 @login_required
 def eliminaPrioridad(request, id):
-
+    """
+    Eliminación de prioridades y redirección a pagina de configuración
+    Utiliza metodo POST con id de prioridad.
+    En html hay un Modal de confirmación.
+    """
     if request.method == "POST":
         Prioridad.objects.filter(id=id).delete()
 
@@ -125,6 +147,9 @@ def eliminaPrioridad(request, id):
 
 
 class PrioridadViewst(viewsets.ModelViewSet):
+    """
+    Clase correspondiente a la API. Con ID devuelve JSON de prioridad
+    """
     queryset = Prioridad.objects.all()
     serializer_class= PrioridadSerializer
 
@@ -139,6 +164,10 @@ class PrioridadViewst(viewsets.ModelViewSet):
 
 @login_required
 def editarPrioridad(request, id):
+    """
+    Por  JS se obtiene de prioridad con API
+    Se completa el form y se guarda por metodo POST.
+    """
     if request.method == "POST":
         prioridad =  Prioridad.objects.filter(id=id).first()
         data = request.POST
@@ -147,3 +176,20 @@ def editarPrioridad(request, id):
             prioridad_serializer.save()
         return redirect(to="config")
     
+
+def registro(request):
+    """
+    Crear usuario por metodo POST.
+    Formulario personalizado a partir del modelo DJANGO
+    Hace un login y retorna a tablero
+    """
+    form=customUserCreationForm()
+
+    if request.method=="POST":
+        form=customUserCreationForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+            usuario=authenticate(username=form.cleaned_data["username"], password=form.cleaned_data["password1"])
+            login(request,usuario)
+            return redirect(to="Home")
+    return render(request, "registration/registro.html", {"form":form})

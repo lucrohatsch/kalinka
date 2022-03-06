@@ -1,20 +1,30 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    {% load static %}
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="{% static '/css/registration.css' %}" rel="stylesheet">
-    <title>Iniciar sesión</title>
-</head>
-<body>
-    <div class="container">
-        <form action="" method="post">
-            {% csrf_token %} 
-            {{ form }}
-            <input type="submit" value="Ingresar" class="boton">
-        </form>
-    </div>
-</body>
-</html>
+
+{% extends "base.html" %}
+
+{% block contenido %}
+<style>
+    .abs-center {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    input{
+      margin: 10px;
+    }
+  </style>
+
+<div class="abs-center">
+    <div class=""> 
+<form action="" method="post">
+    {% csrf_token %} 
+    
+    <input class="form-control" type="text" name="username" autofocus="" autocapitalize="none" autocomplete="username" maxlength="150" required="" id="id_username" placeholder="Usuario">
+    <input class="form-control" type="password" name="password" autocomplete="current-password" required="" id="id_password" placeholder="Contraseña">
+    
+    <input type="submit" value="Ingresar" class="boton btn btn-primary">
+    <a href="{% url 'password_reset' %}">Olvide la contraseña</a>
+</form>
+</div>
+</div>
+{% endblock %}

@@ -33,7 +33,9 @@ DEBUG = env.bool('DEBUG', default=False)
 ALLOWED_HOSTS = tuple(env.list('ALLOWED_HOSTS', default=['*']))
 
 
-LOGIN_REDIRECT_URL = '/'
+
+
+LOGIN_REDIRECT_URL = '/tablero/'
 LOGOUT_REDIRECT_URL = '/'
 # Application definition
 
@@ -87,8 +89,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'kalinka',
-        'USER': env.str('USER'),
-        'PASSWORD': env.str('PASSWORD'),
+        'USER': env.str('DB_USER'),
+        'PASSWORD': env.str('DB_PASSWORD'),
         'HOST': 'pgdb',
         'PORT': 5432,
     }
@@ -137,3 +139,12 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_HOST=env.str('EMAIL_HOST')
+EMAIL_PORT=env.int('EMAIL_PORT')
+EMAIL_USE_TLS=env.bool('EMAIL_USE_TLS')
+EMAIL_HOST_USER=env.str('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD=env.str('EMAIL_HOST_PASSWORD')

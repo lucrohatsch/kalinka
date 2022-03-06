@@ -4,34 +4,31 @@
 {% block contenido %}
 <div class="container-fluid">
     <div class="row ">
-
-      
       {% for col in data %}
+      <!--Inicio de columna por prioridad-->
       <div class="col-sm p-3">
+        <!--Titulo-->
         <div class="row">  
           <h4 class="display-6 text-center">{{ col.prioridad }}</h4>
         </div>
-        <div class="row ">  
-          
-        
+        <!--Lista pendientes-->
+        <div class="row ">
+          <!--Constructor tarjeta-->  
           {% for tarea in col.pendientes %}
           <div class="card mb-2 shadow-sm" style="background: {{ tarea.color }}">
-
-            
             <div class="card-body p-1">
               <div class="card-title d-flex justify-content-between">
                 <strong>{{ tarea.titulo }}</strong>
                 {% if hoy > tarea.f_deseada %}
-                <div class=" text-light bg-dark fw-light">  
+                  <div class=" text-light bg-dark fw-light">  
                 {% else %}
-                <div class=""> 
+                  <div class=""> 
                 {% endif %}
-                  <i class="bi bi-calendar2-week"></i>
-                  {{ tarea.f_deseada }} 
-              </div>
+                    <i class="bi bi-calendar2-week"></i>
+                    {{ tarea.f_deseada }} 
+                  </div>
               </div>
               <p class="card-text fw-light">{{ tarea.descripcion }}</p>
-            
               <div class="text-end">
                 <a href="{% url 'finalizarTarea' tarea.id %}" class="btn-sm btn-success" type="button"><i class="bi bi-check2-square"></i></a>
                 <a href="../api/tarea/?id={{ tarea.id }}" class="btn-sm btn-primary" type="button" data-toggle="modal" data-target="#editaTarea"><i class="bi bi-pencil-square"></i></a>
@@ -39,25 +36,25 @@
               </div>
             </div>
           </div>       
-          {% endfor %} 
+          {% endfor %}
+          <!--Fin tarjeta.--> 
         </div>
-
-        <div class="row align-items-end"> 
-          
-        
+        <!--Fin pendientes-->
+        <!--Inicio resueltas-->
+        <div class="row"> 
           {% for tarea in col.resueltas %}
           <div class="card">
-            <div class="card-title">
+            <div class="card-title d-flex justify-content-between">
               <p class="text-muted fw-light"><del>{{ tarea.titulo }}</del></p>
-            </div>
-            
+              <p class="text-muted">{{ tarea.f_cierre }}</p>
+            </div>  
           </div>
           {% endfor %} 
         </div>
+        <!--Fin resueltas-->
       </div> 
-      
-      {% endfor %} 
-      
+      <!--Fin columna-->
+      {% endfor %}   
     </div>
     
 
