@@ -31,8 +31,9 @@ SECRET_KEY = env.str('SECRET_KEY')
 DEBUG = env.bool('DEBUG', default=False)
 
 ALLOWED_HOSTS = tuple(env.list('ALLOWED_HOSTS', default=['*']))
+print(ALLOWED_HOSTS)
 
-
+CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:1337', '0.0.0.0']
 
 
 LOGIN_REDIRECT_URL = '/tablero/'
@@ -132,7 +133,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
-
+STATIC_ROOT = BASE_DIR / "static/"
+#STATICFILES_DIRS = [ BASE_DIR / "kalinka_app/static/"]
+#print(STATIC_ROOT)
 
 
 # Default primary key field type

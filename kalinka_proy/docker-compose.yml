@@ -4,24 +4,44 @@ services:
         image: postgres
         container_name: pgdb
         environment:
-            - POSTGRES_DB=kalinka
-            - POSTGRES_USER=kalinka
-            - POSTGRES_PASSWORD=kalinka
+            - POSTGRES_DB=
+            - POSTGRES_USER=
+            - POSTGRES_PASSWORD=
         volumes:
             - pgdata:/var/lib/postgresql/data
         ports:
             - "5432:5432"
     kalinka:
         build: .
-        env_file: kalinka_proy/.env
+        #env_file: kalinka_proy/.env
+        environment: 
+            - SECRET_KEY=
+            - DEBUG=True
+            - ALLOWED_HOSTS=0.0.0.0,127.0.0.1
+            - DB_USER=
+            - DB_PASSWORD=
+            - EMAIL_HOST=
+            - EMAIL_PORT=
+            - EMAIL_USE_TLS=
+            - EMAIL_HOST_USER=
+            - EMAIL_HOST_PASSWORD=
         container_name: kalinka_app
-        command: python manage.py runserver 0.0.0.0:8000
+        command: gunicorn kalinka_proy.wsgi:application --bind 0.0.0.0:8000
         volumes:
             - .:/app
-        ports:
-            - "8000:8000"
+            - static_files:/app/static
+        expose:
+            - 8000
         depends_on:
             - pgdb
-
+    nginx:
+        build: ./nginx
+        volumes:
+            - static_files:/app/static
+        ports:
+            - 1337:80
+        depends_on:
+            - kalinka
 volumes:
-    pgdata: 
+    pgdata:
+    static_files: 
