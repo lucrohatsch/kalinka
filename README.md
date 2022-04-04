@@ -4,7 +4,13 @@ Kalinka nace como un proyecto de prática realizado con el simple propósito de 
 
 Consiste en tablero para la gestión de tareas personales. Todas las funcionalidades fueron definidas por por una persona agena al proyecto, quien me aguantó varias horas hablando de códigos.
 
+## Demo
 
+Puedes probar la aplicación en su versión demo.
+
+- [Kalinka](http://kalinka.cultivoiot.com.ar:3900/).
+- usr: demo.
+- pss: demo.2022
 
 ## Estructura
 
