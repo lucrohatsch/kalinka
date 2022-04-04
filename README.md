@@ -8,8 +8,8 @@ Consiste en tablero para la gestión de tareas personales. Todas las funcionalid
 
 Puedes probar la aplicación en su versión demo.
 
-- [Kalinka](http://kalinka.cultivoiot.com.ar:3900/).
-- usr: demo.
+- [Kalinka](http://kalinka.cultivoiot.com.ar:3900/)
+- usr: demo
 - pss: demo.2022
 
 ## Estructura
